@@ -29,12 +29,17 @@
 #include "MP4201.h"
 #include "mcp4725.h"
 #include "screen.h"
+#include "Kalman_Filter.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 extern float vout_target;
 extern int text_tag;
+float R_Iin;
+float R_Iout;
+float R_Vin;
+float R_Vout;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -174,8 +179,15 @@ void MP4201_R(void *argument)
   {
 //		mp4201_FB_Mode_set(&MP4201, EXTERNAL_FB);
 		get_mp4201_all_info(&MP4201);
-		//count++;//每获取一次值就添加到对应total值，次数+1，最后输出值=total/count
-    osDelay(1);
+		R_Iin=Kalman3D_Current_Update(&kf_current_in,MP4201.read_info.Iin_read);
+		R_Iout=Kalman3D_Current_Update(&kf_current_out,MP4201.read_info.Iout_read);
+		MP4201.read_info.P_in           = MP4201.read_info.Vin_read*R_Iin;
+		MP4201.read_info.P_out          = MP4201.read_info.Vout_read*R_Iout;
+		if(MP4201.read_info.P_in > 0)
+		{
+			MP4201.read_info.Eff          = MP4201.read_info.P_out/MP4201.read_info.P_in * 100.00f;
+		}
+    osDelay(10);
   }
   /* USER CODE END MP4201_R */
 }

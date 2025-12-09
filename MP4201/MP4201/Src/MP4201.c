@@ -74,12 +74,7 @@ void get_mp4201_all_read_data_info(hMP4201_t *mp4201, uint8_t count)
 	mp4201->read_info.Vout_read 	   = vout_average;
 	mp4201->read_info.Iout_read 	   = iout_average;
 	mp4201->read_info.Temperature_read = temperature_average;
-	mp4201->read_info.P_in           = vin_average*iin_average;
-	mp4201->read_info.P_out          = vout_average*iout_average;
-	if(mp4201->read_info.P_in > 0)
-	{
-		mp4201->read_info.Eff          = mp4201->read_info.P_out/mp4201->read_info.P_in * 100.0f;
-	}
+	
 }
 
 void get_mp4201_all_info(hMP4201_t *mp4201)
@@ -93,7 +88,7 @@ void get_mp4201_all_info(hMP4201_t *mp4201)
     mp4201_read_battery_pre_charge_current_set(mp4201);
     get_mp4201_status_info(mp4201);
     get_mp4201_status_temperature_info(mp4201);
-    get_mp4201_all_read_data_info(mp4201, 20);
+    get_mp4201_all_read_data_info(mp4201, 5);
     get_mp4201_OTP_info(mp4201);
 	  get_mp4201_MFR_STATUS_MASK_reg_info(mp4201);
 }
@@ -141,11 +136,11 @@ void MP4201_Init(hMP4201_t *mp4201)
 //		mp4201_DIR_set(&MP4201,1);
 //		mp4201_vin_OVP_set(mp4201,VIN_OVP_60V);
 //		mp4201_abs_vout_OVP_set(mp4201,ABS_VOUT_OVP_104);
-		mp4201_DEAD_Time_set(mp4201,0x01);
+		mp4201_DEAD_Time_set(mp4201,DEAD_TIME_20NS);
 //    mp4201_vin_reg_thld_set(mp4201, 48.0f);
 //    mp4201_OCP_Mode_set(mp4201, HICCUP_MODE);
 		mp4201_VOUT_OVP_enable_set(mp4201,0x00);
-	  mp4201_FB_Mode_set(mp4201, 0x00);
+	  mp4201_FB_Mode_set(mp4201, INTERNAL_FB);
 		get_mp4201_all_info(mp4201);
     mp4201_operation_set(mp4201,true);
 }

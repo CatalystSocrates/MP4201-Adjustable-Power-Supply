@@ -54,5 +54,3 @@ void MP4201_SET_FREQ(MP4201_FREQ FREQ)
 {
 	MCP4725_SetVoltage(&hi2c1,MCP4725_ADDR1,FREQ,1);
 }
-
-    

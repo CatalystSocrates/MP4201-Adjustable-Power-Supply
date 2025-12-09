@@ -1,7 +1,7 @@
 stm32f072c8t6\freertos.o: ../Src/freertos.c
 stm32f072c8t6\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-stm32f072c8t6\freertos.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
-stm32f072c8t6\freertos.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+stm32f072c8t6\freertos.o: C:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stddef.h
+stm32f072c8t6\freertos.o: C:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdint.h
 stm32f072c8t6\freertos.o: ../Inc/FreeRTOSConfig.h
 stm32f072c8t6\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 stm32f072c8t6\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
@@ -51,9 +51,10 @@ stm32f072c8t6\freertos.o: ../MP4201/Inc/MP4201.h
 stm32f072c8t6\freertos.o: ../MP4201/Inc/MP4201Driver.h
 stm32f072c8t6\freertos.o: ../MP4201/Inc/MP4201Middleware.h
 stm32f072c8t6\freertos.o: ../MP4201/Inc/MP4201Command.h
-stm32f072c8t6\freertos.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+stm32f072c8t6\freertos.o: C:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdbool.h
 stm32f072c8t6\freertos.o: ../Inc/i2c.h
 stm32f072c8t6\freertos.o: ../MCP4725/mcp4725.h
 stm32f072c8t6\freertos.o: ../SCREEN/screen.h
 stm32f072c8t6\freertos.o: ../Inc/usart.h
-stm32f072c8t6\freertos.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+stm32f072c8t6\freertos.o: C:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdio.h
+stm32f072c8t6\freertos.o: ..\Kalman_Filter\Kalman_Filter.h

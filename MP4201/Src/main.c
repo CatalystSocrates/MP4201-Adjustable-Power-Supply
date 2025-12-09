@@ -30,6 +30,7 @@
 #include "w25qxx.h"
 #include "MP4201.h"
 #include "mcp4725.h"
+#include "Kalman_Filter.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -124,6 +125,9 @@ int main(void)
 	
 	mp4201_vout_set(&MP4201, vout_target);
 	HAL_UART_Receive_IT(&huart1,&recv_data, 1);
+	
+	Kalman3D_Current_Init(&kf_current_in,0.0f, 0.0f, 0.0f, 0.01f);
+	Kalman3D_Current_Init(&kf_current_out,0.0f, 0.0f, 0.0f, 0.01f);
 //	mp4201_operation_set(&MP4201,false);
   /* USER CODE END 2 */
 

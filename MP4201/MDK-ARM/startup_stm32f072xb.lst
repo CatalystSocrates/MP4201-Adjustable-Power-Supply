@@ -376,12 +376,11 @@ ARM Macro Assembler    Page 6
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M0 --apcs=interw
 ork --depend=stm32f072c8t6\startup_stm32f072xb.d -ostm32f072c8t6\startup_stm32f
-072xb.o -I../Drivers/CMSIS/Include -I.\RTE\_STM32F072C8T6 -IE:\Users\a\AppData\
-Local\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include -IE:\Users\a\AppData\Local\A
-rm\Packs\Keil\STM32F0xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F0xx\Include --p
-redefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 525" --predefi
-ne="_RTE_ SETA 1" --predefine="STM32F072xB SETA 1" --list=startup_stm32f072xb.l
-st startup_stm32f072xb.s
+072xb.o -I../Drivers/CMSIS/Include -I.\RTE\_STM32F072C8T6 -IC:\Users\Catal\AppD
+ata\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include --predefine="__MICROLIB 
+SETA 1" --predefine="__UVISION_VERSION SETA 539" --predefine="_RTE_ SETA 1" --p
+redefine="STM32F072xB SETA 1" --predefine="_RTE_ SETA 1" --list=startup_stm32f0
+72xb.lst startup_stm32f072xb.s
 
 
 

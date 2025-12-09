@@ -1,8 +1,8 @@
 stm32f072c8t6\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c
-stm32f072c8t6\stream_buffer.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-stm32f072c8t6\stream_buffer.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+stm32f072c8t6\stream_buffer.o: C:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdint.h
+stm32f072c8t6\stream_buffer.o: C:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\string.h
 stm32f072c8t6\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-stm32f072c8t6\stream_buffer.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+stm32f072c8t6\stream_buffer.o: C:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stddef.h
 stm32f072c8t6\stream_buffer.o: ../Inc/FreeRTOSConfig.h
 stm32f072c8t6\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 stm32f072c8t6\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h

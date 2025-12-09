@@ -2,8 +2,8 @@ stm32f072c8t6\mp4201driver.o: ..\MP4201\Src\MP4201Driver.c
 stm32f072c8t6\mp4201driver.o: ../MP4201/Inc/MP4201Driver.h
 stm32f072c8t6\mp4201driver.o: ../MP4201/Inc/MP4201Middleware.h
 stm32f072c8t6\mp4201driver.o: ../MP4201/Inc/MP4201Command.h
-stm32f072c8t6\mp4201driver.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-stm32f072c8t6\mp4201driver.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+stm32f072c8t6\mp4201driver.o: C:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdint.h
+stm32f072c8t6\mp4201driver.o: C:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdbool.h
 stm32f072c8t6\mp4201driver.o: ../Inc/i2c.h
 stm32f072c8t6\mp4201driver.o: ../Inc/main.h
 stm32f072c8t6\mp4201driver.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h
@@ -19,7 +19,7 @@ stm32f072c8t6\mp4201driver.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
 stm32f072c8t6\mp4201driver.o: ../Drivers/CMSIS/Device/ST/STM32F0xx/Include/system_stm32f0xx.h
 stm32f072c8t6\mp4201driver.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h
 stm32f072c8t6\mp4201driver.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h
-stm32f072c8t6\mp4201driver.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+stm32f072c8t6\mp4201driver.o: C:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stddef.h
 stm32f072c8t6\mp4201driver.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_rcc_ex.h
 stm32f072c8t6\mp4201driver.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_gpio.h
 stm32f072c8t6\mp4201driver.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_gpio_ex.h

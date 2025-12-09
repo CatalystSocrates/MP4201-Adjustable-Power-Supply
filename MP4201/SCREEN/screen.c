@@ -19,14 +19,17 @@ bool CV_CC;//0ΪCV1ΪCC
 int mode;
 int freq;
 int i;
+extern float R_Iin;
+extern float R_Iout;
 void dataupdate()
 {
 	if(uart1_recv_frame[0]==0xAA)
 	{
-		vout_target=uart1_recv_frame[1] + uart1_recv_frame[2]*0.01;
-		SETI=uart1_recv_frame[3] + uart1_recv_frame[4]*0.01;
-		OVP=uart1_recv_frame[5] + uart1_recv_frame[6]*0.01;
-		OCP=uart1_recv_frame[7] + uart1_recv_frame[8]*0.01;
+		vout_target=uart1_recv_frame[1] + uart1_recv_frame[2]*0.01f;
+		SETI=uart1_recv_frame[3] + uart1_recv_frame[4]*0.01f;
+		
+		OVP=uart1_recv_frame[5] + uart1_recv_frame[6]*0.01f;
+		OCP=uart1_recv_frame[7] + uart1_recv_frame[8]*0.01f;
 		mp4201_iout_oc_fault_limit_set(&MP4201,SETI);
 	}else if(uart1_recv_frame[0]==0xEE)
 	{
@@ -74,8 +77,8 @@ void dataupdate()
 	{
 		mode=1;
 		freq=1;
-		SETV=5.00;
-		SETI=4.00;//屏幕上电初始化后，保持主控和屏幕信息一致
+		SETV=5.00f;
+		SETI=4.00f;//屏幕上电初始化后，保持主控和屏幕信息一致
 	}
 
 	memset(uart1_recv_frame,0,sizeof(uart1_recv_frame));
@@ -83,10 +86,10 @@ void dataupdate()
 void screen_update()
 {
   Vin = MP4201.read_info.Vin_read;    
-	Iin = MP4201.read_info.Iin_read;
+	Iin = R_Iin;
 	Pin = MP4201.read_info.P_in;
 	Vout = MP4201.read_info.Vout_read;	   
-	Iout = MP4201.read_info.Iout_read;  
+	Iout = R_Iout;  
 	Pout = MP4201.read_info.P_out;
 	temperature = MP4201.read_info.Temperature_read;
 	Eff = MP4201.read_info.Eff;
@@ -99,10 +102,13 @@ void screen_update()
 	printf("main.t3.txt=\"%.1f\"\xff\xff\xff",temperature);
 	printf("main.t6.txt=\"%.2f\"\xff\xff\xff",Vin);
 	printf("main.t13.txt=\"%.2f\"\xff\xff\xff",Iin);
-	printf("main.t22.txt=\"%.2f\"\xff\xff\xff",Pin);
+	if(Pin>=100.0)
+	{
+		printf("main.t22.txt=\"%.1f\"\xff\xff\xff",Pin);
+	}else printf("main.t22.txt=\"%.2f\"\xff\xff\xff",Pin);
 	printf("main.t26.txt=\"%.2f\"\xff\xff\xff",Eff);
 	printf("add s0.id,0,%d\xff\xff\xff",(int)((Vout-vout_target)*200));
-	printf("add s0.id,1,%d\xff\xff\xff",(int)(Iout*1000)+128);
+	printf("add s0.id,1,%d\xff\xff\xff",(int)(Iout*10));
 	
 	if(fault_flag)
 	{

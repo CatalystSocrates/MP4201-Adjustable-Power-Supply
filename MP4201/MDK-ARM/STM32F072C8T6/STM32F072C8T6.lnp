@@ -36,6 +36,7 @@
 "stm32f072c8t6\mp4201middleware.o"
 "stm32f072c8t6\mcp4725.o"
 "stm32f072c8t6\screen.o"
+"stm32f072c8t6\kalman_filter.o"
 "stm32f072c8t6\croutine.o"
 "stm32f072c8t6\event_groups.o"
 "stm32f072c8t6\list.o"
