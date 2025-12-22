@@ -24,4 +24,8 @@ typedef struct{
     float u;
 }KalmanInfo;
 
+extern char message[50];
+
+void xprintf(char * xstring,float xdata);
+
 #endif

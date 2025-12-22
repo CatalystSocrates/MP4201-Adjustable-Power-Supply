@@ -23,6 +23,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "MP4201.h"
+#include "stdio.h"
+#include "usart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -110,7 +112,7 @@ void HardFault_Handler(void)
 void EXTI4_15_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI4_15_IRQn 0 */
-	fault_flag=1;
+
   /* USER CODE END EXTI4_15_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(ALT_Pin);
   /* USER CODE BEGIN EXTI4_15_IRQn 1 */
@@ -162,4 +164,30 @@ void USART2_IRQHandler(void)
 
 /* USER CODE BEGIN 1 */
 
+//void HAL_GPIO_EXIT_Callback(uint16_t GPIO_PIN)
+//{
+//	get_mp4201_status_info(&MP4201);
+//	if(MP4201.status_info.SCP_fault)
+//	{
+//		yprintf("SCP_fault=1\xff\xff\xff"); 
+//		yprintf("bt2.val=0\xff\xff\xff"); 
+//		mp4201_operation_set(&MP4201,0);
+//		yprintf("bt2.txt=\"OFF\"\xff\xff\xff"); 
+//	}
+//	if(MP4201.status_info.Vin_overvoltage_fault)
+//		yprintf("Vin_overvoltage_fault=1\xff\xff\xff");
+//	//if(MP4201.status_info.PG_STATUS)printf("PG_STATUS=1\xff\xff\xff");
+//	if(MP4201.status_info.Is_Charger_completed)
+//		yprintf("Is_Charger_completed=1\xff\xff\xff");
+//	if(MP4201.status_info.Iin_overcurrent_fault)
+//		yprintf("Iin_overcurrent_fault=1\xff\xff\xff");
+//	if(MP4201.status_info.Vout_overvoltage_fault)
+//		yprintf("Vout_overvoltage_fault=1\xff\xff\xff");
+//	//if(MP4201.status_info.Iout_overcurrent_fault)printf("Iout_overcurrent_fault=1\xff\xff\xff");
+//	if(MP4201.status_info.Temperature_fault)
+//		yprintf("Temperature_fault=1\xff\xff\xff");
+//	if(MP4201.status_info.CRC_error_fault)
+//		yprintf("CRC_error_fault=1\xff\xff\xff");
+//	mp4201_clear_faults(&MP4201);
+//}
 /* USER CODE END 1 */

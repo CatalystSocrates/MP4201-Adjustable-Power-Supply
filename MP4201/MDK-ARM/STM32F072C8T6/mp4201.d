@@ -40,3 +40,6 @@ stm32f072c8t6\mp4201.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim.h
 stm32f072c8t6\mp4201.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim_ex.h
 stm32f072c8t6\mp4201.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart.h
 stm32f072c8t6\mp4201.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart_ex.h
+stm32f072c8t6\mp4201.o: ../Inc/usart.h
+stm32f072c8t6\mp4201.o: C:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdio.h
+stm32f072c8t6\mp4201.o: C:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\string.h

@@ -6,6 +6,9 @@
 ********************************************************************************/
 
 #include "MP4201.h"
+#include "usart.h"
+#include "stdio.h"
+#include <string.h> 
 
 hMP4201_t MP4201;
 
@@ -143,4 +146,23 @@ void MP4201_Init(hMP4201_t *mp4201)
 	  mp4201_FB_Mode_set(mp4201, INTERNAL_FB);
 		get_mp4201_all_info(mp4201);
     mp4201_operation_set(mp4201,true);
+}
+
+void delay_20ms_48MHz(void)
+{
+    uint32_t total_cycles = 960000;  // 20ms总周期数：48MHz*20ms=960000
+    uint32_t loop_cycles = 3;        // 内层while循环单轮消耗的周期数（需实测校准）
+    uint32_t count = total_cycles / loop_cycles;  // 循环次数
+
+    // 空跑while循环（消耗周期）
+    while(count--)
+    {
+        __NOP();  // 空操作指令，消耗1个周期（可选，用于校准）
+    }
+}
+
+void yprintf(const char * ystring)
+{
+	uint16_t str_len = strlen(ystring);
+	HAL_UART_Transmit(&huart1, (uint8_t*)ystring, str_len,10);
 }

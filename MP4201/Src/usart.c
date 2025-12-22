@@ -43,6 +43,7 @@ UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
 UART_HandleTypeDef huart3;
 UART_HandleTypeDef huart4;
+DMA_HandleTypeDef hdma_usart4_tx;
 
 /* USART1 init function */
 
@@ -57,7 +58,7 @@ void MX_USART1_UART_Init(void)
 
   /* USER CODE END USART1_Init 1 */
   huart1.Instance = USART1;
-  huart1.Init.BaudRate = 512000;
+  huart1.Init.BaudRate = 256000;
   huart1.Init.WordLength = UART_WORDLENGTH_8B;
   huart1.Init.StopBits = UART_STOPBITS_1;
   huart1.Init.Parity = UART_PARITY_NONE;
@@ -271,6 +272,23 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     GPIO_InitStruct.Alternate = GPIO_AF4_USART4;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
+    /* USART4 DMA Init */
+    /* USART4_TX Init */
+    hdma_usart4_tx.Instance = DMA1_Channel7;
+    hdma_usart4_tx.Init.Direction = DMA_MEMORY_TO_PERIPH;
+    hdma_usart4_tx.Init.PeriphInc = DMA_PINC_DISABLE;
+    hdma_usart4_tx.Init.MemInc = DMA_MINC_ENABLE;
+    hdma_usart4_tx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+    hdma_usart4_tx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+    hdma_usart4_tx.Init.Mode = DMA_NORMAL;
+    hdma_usart4_tx.Init.Priority = DMA_PRIORITY_LOW;
+    if (HAL_DMA_Init(&hdma_usart4_tx) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    __HAL_LINKDMA(uartHandle,hdmatx,hdma_usart4_tx);
+
   /* USER CODE BEGIN USART4_MspInit 1 */
 
   /* USER CODE END USART4_MspInit 1 */
@@ -352,6 +370,8 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
     */
     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_0|GPIO_PIN_1);
 
+    /* USART4 DMA DeInit */
+    HAL_DMA_DeInit(uartHandle->hdmatx);
   /* USER CODE BEGIN USART4_MspDeInit 1 */
 
   /* USER CODE END USART4_MspDeInit 1 */
@@ -379,20 +399,21 @@ void UART_RingBuffer_Write(uint8_t *ring_buf, uint8_t data)
 	if(data==UART_FRAME_HEAD)//接收到帧头，接下来开始准备接收数据
 	{
 		recv_flag=1;
-	}else if(data==UART_FRAME_TAIL1)
+	}
+	else if(data==UART_FRAME_TAIL)//优先判断是否是帧尾，若不是则为数据
 	{
 		tail_index++;
 		if(tail_index==3)
 		{
 			dataupdate();
 			tail_index=0;
+			recv_flag=0;
 			recv_index=0;//接收完成
 		}
-	}else if(recv_flag)//优先判断是否是帧尾，若不是则为数据
+	}
+	else if(recv_flag)
 	{
 		uart1_recv_frame[recv_index++]=data;
 	}
-	
-	
 }
 /* USER CODE END 1 */

@@ -41,3 +41,5 @@ stm32f072c8t6\stm32f0xx_it.o: ../MP4201/Inc/MP4201Middleware.h
 stm32f072c8t6\stm32f0xx_it.o: ../MP4201/Inc/MP4201Command.h
 stm32f072c8t6\stm32f0xx_it.o: C:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdbool.h
 stm32f072c8t6\stm32f0xx_it.o: ../Inc/i2c.h
+stm32f072c8t6\stm32f0xx_it.o: C:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdio.h
+stm32f072c8t6\stm32f0xx_it.o: ../Inc/usart.h

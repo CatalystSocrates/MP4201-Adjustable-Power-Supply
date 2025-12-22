@@ -51,7 +51,7 @@ void mp4201_vout_set(hMP4201_t *mp4201, float vout)
         else if (vout > 85.12f)
             vout = 85.12f;
         mp4201->Vout_set = vout;
-        uint16_t vout_reg_val = (uint16_t)((vout * 1000.0f / MP4201_INTERNAL_FEEDBACK_RATIO) / 0.625f) & 0x0FFF;
+        uint16_t vout_reg_val = (uint16_t)((vout * 1000.0f / MP4201_INTERNAL_FEEDBACK_RATIO) / 0.628f) & 0x0FFF;
         MP4201_WriteWord(mp4201->Device_Address,VOUT_COMMAND_COMMAND_CODE,vout_reg_val);
     }
     else if (mp4201->MFR_CTRL1.FB_MODE == EXTERNAL_FB)
@@ -60,7 +60,7 @@ void mp4201_vout_set(hMP4201_t *mp4201, float vout)
             vout = 0.1f;
         else if (vout > 100.0f)
             vout = 100.0f;
-				uint16_t vout_reg_val = (uint16_t)((vout * 1000.0f / EXTERNAL_FEEDBACK_RATIO) / 0.625f) & 0x0FFF;
+				uint16_t vout_reg_val = (uint16_t)((vout * 1000.0f / EXTERNAL_FEEDBACK_RATIO) / 0.628f) & 0x0FFF;
         mp4201->Vout_set = vout;
         MP4201_WriteWord(mp4201->Device_Address,VOUT_COMMAND_COMMAND_CODE,vout_reg_val);
     }

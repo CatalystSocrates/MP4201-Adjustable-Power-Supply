@@ -3,6 +3,7 @@
 "stm32f072c8t6\main.o"
 "stm32f072c8t6\gpio.o"
 "stm32f072c8t6\freertos.o"
+"stm32f072c8t6\dma.o"
 "stm32f072c8t6\i2c.o"
 "stm32f072c8t6\spi.o"
 "stm32f072c8t6\usart.o"

@@ -43,6 +43,7 @@ stm32f072c8t6\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portabl
 stm32f072c8t6\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
 stm32f072c8t6\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM0/portmacro.h
 stm32f072c8t6\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+stm32f072c8t6\main.o: ../Inc/dma.h
 stm32f072c8t6\main.o: ../Inc/i2c.h
 stm32f072c8t6\main.o: ../Inc/spi.h
 stm32f072c8t6\main.o: ../Inc/usart.h
@@ -55,4 +56,4 @@ stm32f072c8t6\main.o: ../MP4201/Inc/MP4201Middleware.h
 stm32f072c8t6\main.o: ../MP4201/Inc/MP4201Command.h
 stm32f072c8t6\main.o: C:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdbool.h
 stm32f072c8t6\main.o: ../MCP4725/mcp4725.h
-stm32f072c8t6\main.o: ..\Kalman_Filter\Kalman_Filter.h
+stm32f072c8t6\main.o: ../Kalman_Filter/Kalman_Filter.h

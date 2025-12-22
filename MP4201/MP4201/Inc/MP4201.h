@@ -26,6 +26,6 @@ void get_mp4201_all_info(hMP4201_t *mp4201);
 void mp4201_reset_all_MRF_CTRL_reg(hMP4201_t *mp4201);
 void MP4201_Init(hMP4201_t *mp4201);
 
-
-
+void delay_20ms_48MHz(void);
+void yprintf(const char * ystring);
 #endif //MP4201_H

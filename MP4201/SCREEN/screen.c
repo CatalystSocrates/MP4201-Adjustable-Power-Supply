@@ -11,25 +11,25 @@ float Pin;
 float Vout;
 float Iout;
 float Pout;
-float OVP;
-float OCP;
 float Eff;
 bool OPEN;
-bool CV_CC;//0ΪCV1ΪCC
+bool CV_CC;
 int mode;
 int freq;
 int i;
 extern float R_Iin;
 extern float R_Iout;
+
+
+
 void dataupdate()
 {
 	if(uart1_recv_frame[0]==0xAA)
 	{
 		vout_target=uart1_recv_frame[1] + uart1_recv_frame[2]*0.01f;
 		SETI=uart1_recv_frame[3] + uart1_recv_frame[4]*0.01f;
-		
-		OVP=uart1_recv_frame[5] + uart1_recv_frame[6]*0.01f;
-		OCP=uart1_recv_frame[7] + uart1_recv_frame[8]*0.01f;
+
+		mp4201_vout_set(&MP4201, vout_target);
 		mp4201_iout_oc_fault_limit_set(&MP4201,SETI);
 	}else if(uart1_recv_frame[0]==0xEE)
 	{
@@ -77,11 +77,31 @@ void dataupdate()
 	{
 		mode=1;
 		freq=1;
-		SETV=5.00f;
+		SETV=12.00f;
 		SETI=4.00f;//屏幕上电初始化后，保持主控和屏幕信息一致
 	}
 
 	memset(uart1_recv_frame,0,sizeof(uart1_recv_frame));
+}
+void xprintf(char * xstring,float xdata)
+{
+	// 定义缓冲区，50字节足够容纳绝大多数格式化场景（可根据需求调整）
+    char message[50];
+    // 1. 格式化字符串：将a和b拼接成目标字符串
+    // snprintf避免缓冲区溢出，第二个参数为缓冲区总大小
+    int len = snprintf(message, sizeof(message) - 3, xstring, xdata);
+    // 减3是为预留3个0xFF的空间，防止溢出
+
+    // 2. 仅当格式化成功时，追加3个0xFF并发送
+    if (len > 0 && len < sizeof(message) - 3)
+    {
+        message[len]     = 0xFF;  // 第一个0xFF
+        message[len + 1] = 0xFF;  // 第二个0xFF
+        message[len + 2] = 0xFF;  // 第三个0xFF
+
+        // 3. 串口发送：长度=格式化字符串长度+3个0xFF
+        HAL_UART_Transmit(&huart1, (uint8_t*)message, len + 3 , 100);
+    }
 }
 void screen_update()
 {
@@ -93,42 +113,31 @@ void screen_update()
 	Pout = MP4201.read_info.P_out;
 	temperature = MP4201.read_info.Temperature_read;
 	Eff = MP4201.read_info.Eff;
-	printf("main.t0.txt=\"%.2f\"\xff\xff\xff",Vout);
-	printf("main.t1.txt=\"%.2f\"\xff\xff\xff",Iout);
+	if(MP4201.operation== 0)
+	{
+		Vout = 0.0f;	   
+		Iout = 0.0f;  
+		Pout = 0.0f;
+	}
+	xprintf("main.t0.txt=\"%.2f\"",Vout);
+	xprintf("main.t1.txt=\"%.2f\"\xff\xff\xff",Iout);
 	if(Pout>=100.0)
 	{
-		printf("main.t2.txt=\"%.1f\"\xff\xff\xff",Pout);
-	}else printf("main.t2.txt=\"%.2f\"\xff\xff\xff",Pout);
-	printf("main.t3.txt=\"%.1f\"\xff\xff\xff",temperature);
-	printf("main.t6.txt=\"%.2f\"\xff\xff\xff",Vin);
-	printf("main.t13.txt=\"%.2f\"\xff\xff\xff",Iin);
+		xprintf("main.t2.txt=\"%.1f\"\xff\xff\xff",Pout);
+	}else xprintf("main.t2.txt=\"%.2f\"\xff\xff\xff",Pout);
+	xprintf("main.t3.txt=\"%.1f\"\xff\xff\xff",temperature);
+	xprintf("main.t6.txt=\"%.2f\"\xff\xff\xff",Vin);
+	xprintf("main.t13.txt=\"%.2f\"\xff\xff\xff",Iin);
 	if(Pin>=100.0)
 	{
-		printf("main.t22.txt=\"%.1f\"\xff\xff\xff",Pin);
-	}else printf("main.t22.txt=\"%.2f\"\xff\xff\xff",Pin);
-	printf("main.t26.txt=\"%.2f\"\xff\xff\xff",Eff);
-	printf("add s0.id,0,%d\xff\xff\xff",(int)((Vout-vout_target)*200));
-	printf("add s0.id,1,%d\xff\xff\xff",(int)(Iout*10));
-	
-	if(fault_flag)
-	{
-		HAL_Delay(10);
-		get_mp4201_status_info(&MP4201);
-		if(MP4201.status_info.SCP_fault)printf("SCP_fault=1\xff\xff\xff"); 
-		if(MP4201.status_info.Vin_overvoltage_fault)printf("Vin_overvoltage_fault=1\xff\xff\xff");
-		//if(MP4201.status_info.PG_STATUS)printf("PG_STATUS=1\xff\xff\xff");
-		if(MP4201.status_info.Is_Charger_completed)printf("Is_Charger_completed=1\xff\xff\xff");
-		if(MP4201.status_info.Iin_overcurrent_fault)printf("Iin_overcurrent_fault=1\xff\xff\xff");
-		if(MP4201.status_info.Vout_overvoltage_fault)printf("Vout_overvoltage_fault=1\xff\xff\xff");
-		//if(MP4201.status_info.Iout_overcurrent_fault)printf("Iout_overcurrent_fault=1\xff\xff\xff");
-		if(MP4201.status_info.Temperature_fault)printf("Temperature_fault=1\xff\xff\xff");
-		if(MP4201.status_info.CRC_error_fault)printf("CRC_error_fault=1\xff\xff\xff");
-		mp4201_clear_faults(&MP4201);
-		fault_flag=0;
-	}
+		xprintf("main.t22.txt=\"%.1f\"\xff\xff\xff",Pin);
+	}else xprintf("main.t22.txt=\"%.2f\"\xff\xff\xff",Pin);
+	xprintf("main.t26.txt=\"%.2f\"\xff\xff\xff",Eff);
+	printf("add s0.id,0,%d\xff\xff\xff",(int)(Vout*3.125));
+  printf("add s0.id,1,%d\xff\xff\xff",(int)(R_Iout*10));
 	if(Iout < SETI + 0.5f && Iout > SETI - 0.5f)//若OCP处于使能状态，说明处于CC(恒流状态)
 	{
-		printf("CV_CC=1\xff\xff\xff");
-	}else printf("CV_CC=0\xff\xff\xff");
+		yprintf("CV_CC=1\xff\xff\xff");
+	}else yprintf("CV_CC=0\xff\xff\xff");
 }
 

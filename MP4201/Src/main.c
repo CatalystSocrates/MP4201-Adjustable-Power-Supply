@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
+#include "dma.h"
 #include "i2c.h"
 #include "spi.h"
 #include "usart.h"
@@ -54,7 +55,7 @@ extern hMP4201_t MP4201;
 bool fault_flag = 0; 
 uint8_t writebuffer[8] = {1,2,3,4,5,6,7,8};
 uint8_t readbuffer[8] = {0};
-float vout_target=5.0f;
+float vout_target=12.0f;
 int text_tag=0;
 uint16_t count=0;
 float total[8]={0};
@@ -109,6 +110,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_SPI1_Init();
   MX_USART1_UART_Init();
   MX_I2C1_Init();

@@ -44,9 +44,7 @@ extern UART_HandleTypeDef huart4;
 /* USER CODE BEGIN Private defines */
 // -------------------------- 协议参数配置--------------------------
 #define UART_FRAME_HEAD    0x66        // 帧头
-#define UART_FRAME_TAIL1   0xFF        // 帧尾第1字节
-#define UART_FRAME_TAIL2   0xFF        // 帧尾第2字节
-#define UART_FRAME_TAIL3   0xFF        // 帧尾第3字节
+#define UART_FRAME_TAIL   0xFF        // 帧尾
 #define BUFFER_MAX_LEN     64          // 环形缓冲区最大长度（需大于最大帧长）
 #define MAX_FRAME_LEN      32          // 单帧最大长度（避免无效数据）
 // 全局变量声明（供主函数/其他模块调用）

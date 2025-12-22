@@ -177,7 +177,6 @@ void MP4201_R(void *argument)
   /* Infinite loop */
   for(;;)
   {
-//		mp4201_FB_Mode_set(&MP4201, EXTERNAL_FB);
 		get_mp4201_all_info(&MP4201);
 		R_Iin=Kalman3D_Current_Update(&kf_current_in,MP4201.read_info.Iin_read);
 		R_Iout=Kalman3D_Current_Update(&kf_current_out,MP4201.read_info.Iout_read);
@@ -205,8 +204,15 @@ void MP4201_W(void *argument)
   /* Infinite loop */
   for(;;)
   {
-		mp4201_vout_set(&MP4201, vout_target);
-    osDelay(10);
+		if(MP4201.status_info.SCP_fault)
+		{
+			mp4201_operation_set(&MP4201,0);
+			mp4201_clear_faults(&MP4201);
+			yprintf("SCP_fault=1\xff\xff\xff"); 
+			yprintf("bt2.txt=\"OFF\"\xff\xff\xff");
+			yprintf("bt2.val=0\xff\xff\xff"); 
+		}
+    osDelay(100);
   }
   /* USER CODE END MP4201_W */
 }
