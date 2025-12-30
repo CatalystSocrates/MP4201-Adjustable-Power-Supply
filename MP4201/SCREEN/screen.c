@@ -20,6 +20,11 @@ int i;
 extern float R_Iin;
 extern float R_Iout;
 
+void yprintf(const char * ystring)
+{
+	uint16_t str_len = strlen(ystring);
+	HAL_UART_Transmit(&huart1, (uint8_t*)ystring, str_len,10);
+}
 
 
 void dataupdate()

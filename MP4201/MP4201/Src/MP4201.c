@@ -131,38 +131,22 @@ void MP4201_Init(hMP4201_t *mp4201)
 {
     mp4201->Device_Address = MP4201_ADDR;
 	  HAL_Delay(200); // MP4201上电后需要等一段时间通信，不然容易出现一些难以理解的问题
-	  mp4201_operation_set(&MP4201,false);
+	  mp4201_operation_set(mp4201,false);
 		Reset_mp4201_MFR_CTRL1(mp4201);
 		get_mp4201_all_info(mp4201);
 		mp4201_clear_faults(mp4201);
-		mp4201_VOUT_OVP_enable_set(mp4201,0x00);
-//		mp4201_DIR_set(&MP4201,1);
+		mp4201_VOUT_OVP_enable_set(mp4201,false);
+		mp4201_DIR_set(&MP4201,1);
 //		mp4201_vin_OVP_set(mp4201,VIN_OVP_60V);
 //		mp4201_abs_vout_OVP_set(mp4201,ABS_VOUT_OVP_104);
 		mp4201_DEAD_Time_set(mp4201,DEAD_TIME_20NS);
 //    mp4201_vin_reg_thld_set(mp4201, 48.0f);
 //    mp4201_OCP_Mode_set(mp4201, HICCUP_MODE);
-		mp4201_VOUT_OVP_enable_set(mp4201,0x00);
+   	mp4201_current_limit_set(mp4201,PEAK_CURRENT_35A_VALLEY_CURRENT_30A_LIMIT);
+		mp4201_VOUT_OVP_enable_set(mp4201,true);
 	  mp4201_FB_Mode_set(mp4201, INTERNAL_FB);
 		get_mp4201_all_info(mp4201);
     mp4201_operation_set(mp4201,true);
 }
 
-void delay_20ms_48MHz(void)
-{
-    uint32_t total_cycles = 960000;  // 20ms总周期数：48MHz*20ms=960000
-    uint32_t loop_cycles = 3;        // 内层while循环单轮消耗的周期数（需实测校准）
-    uint32_t count = total_cycles / loop_cycles;  // 循环次数
 
-    // 空跑while循环（消耗周期）
-    while(count--)
-    {
-        __NOP();  // 空操作指令，消耗1个周期（可选，用于校准）
-    }
-}
-
-void yprintf(const char * ystring)
-{
-	uint16_t str_len = strlen(ystring);
-	HAL_UART_Transmit(&huart1, (uint8_t*)ystring, str_len,10);
-}

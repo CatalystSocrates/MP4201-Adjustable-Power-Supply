@@ -27,5 +27,5 @@ typedef struct{
 extern char message[50];
 
 void xprintf(char * xstring,float xdata);
-
+void yprintf(const char * ystring);
 #endif
