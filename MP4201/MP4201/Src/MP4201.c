@@ -146,7 +146,7 @@ void MP4201_Init(hMP4201_t *mp4201)
 		mp4201_VOUT_OVP_enable_set(mp4201,true);
 	  mp4201_FB_Mode_set(mp4201, INTERNAL_FB);
 		get_mp4201_all_info(mp4201);
-    mp4201_operation_set(mp4201,true);
+    mp4201_operation_set(mp4201,false);
 }
 
 

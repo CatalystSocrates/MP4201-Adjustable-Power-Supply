@@ -384,12 +384,13 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 // -------------------------- 串口1中断接收回调函数（HAL库核心） --------------------------
 // 每次接收1字节数据后，HAL库自动调用此函数
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-    if (huart->Instance == USART1) {  // 确认是串口1
-        // 1. 将接收的数据写入环形缓冲区
-        UART_RingBuffer_Write(uart1_ring_buf, recv_data);
-        // 2. 重新开启中断接收（HAL库中断接收需手动重启）
-        HAL_UART_Receive_IT(&huart1, &recv_data, 1);
-    }
+	if (huart->Instance == USART1) {  // 确认是串口1
+		// 1. 将接收的数据写入环形缓冲区
+		UART_RingBuffer_Write(uart1_ring_buf, recv_data);
+		
+		// 2. 重新开启中断接收（HAL库中断接收需手动重启）
+		HAL_UART_Receive_IT(&huart1, &recv_data, 1);
+	}
 }
 
 // -------------------------- 环形缓冲区 --------------------------
@@ -416,4 +417,17 @@ void UART_RingBuffer_Write(uint8_t *ring_buf, uint8_t data)
 		uart1_recv_frame[recv_index++]=data;
 	}
 }
+void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
+{
+    if (huart->Instance == USART1) {
+        __HAL_UART_CLEAR_OREFLAG(huart);
+        __HAL_UART_CLEAR_FEFLAG(huart);
+        __HAL_UART_CLEAR_NEFLAG(huart);
+        __HAL_UART_CLEAR_PEFLAG(huart);
+
+        // 重新启动接收
+        HAL_UART_Receive_IT(&huart1, &recv_data, 1);
+    }
+}
+
 /* USER CODE END 1 */
